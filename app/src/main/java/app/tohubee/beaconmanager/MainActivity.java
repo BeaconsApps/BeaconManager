@@ -1,23 +1,32 @@
 package app.tohubee.beaconmanager;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import fragments.BeaconListFragment;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends FragmentActivity {
+
+    BeaconListFragment beaconListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Branching
-
-
-
+        if (savedInstanceState == null) {
+            beaconListFragment = BeaconListFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.beacon_list, beaconListFragment)
+                    .commit();
+        } else {
+            beaconListFragment = (BeaconListFragment) getSupportFragmentManager()
+                    .getFragment(savedInstanceState, BeaconListFragment.class.getName());
+        }
     }
 
     @Override
